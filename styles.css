@@ -1,0 +1,452 @@
+/* Blue Box Styles */
+.blue-box {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: blue;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    z-index: 100;
+}
+
+/* Red Box Styles */
+.red-box {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    background-color: red;
+    color: white;
+    padding: 10px 30px;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    z-index: 100;
+}
+
+/* Main app container and other styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    position: relative;
+}
+
+.app-container {
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 20px;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
+}
+
+header h1 {
+    font-size: 2.5rem;
+}
+
+.search-container {
+    margin-top: 20px;
+}
+
+#city-input {
+    padding: 10px;
+    width: 75%;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    font-size: 1rem;
+}
+
+#search-btn {
+    padding: 10px 20px;
+    margin-left: 10px;
+    font-size: 1rem;
+    background-color: #2196f3;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
+}
+
+#search-btn:hover {
+    background-color: #1976d2;
+}
+
+.weather-card {
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.5);
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+#weather-icon {
+    width: 80px;
+}
+
+.details {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.error {
+    color: red;
+    font-size: 1.2rem;
+    margin-top: 20px;
+}
+
+.hidden {
+    display: none;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@media (max-width: 600px) {
+    .app-container {
+        padding: 10px;
+    }
+    
+    #city-input {
+        width: 65%;
+    }
+}
+
+
+/* Adjust existing content to fit above the GIF */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #2a5298; /* Set a background color for the other 50% */
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    position: relative;
+    flex-direction: column; /* Allows stacking of content */
+}
+
+.app-container {
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 20px;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
+    z-index: 1; /* Ensure it stays above the GIF */
+}
+
+/* Blue Box Styles */
+.blue-box {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: blue;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    z-index: 100;
+}
+
+/* Red Box Styles */
+.red-box {
+    background: linear-gradient(135deg, #000000, #1c1c1c); /* Initial gradient background */
+    background-size: 400% 400%; /* Make the background larger to create smooth transitions */
+    animation: gradientAnimation 10s ease infinite; /* Animation properties */
+    color: #d3d3d3; /* Greyish white text color */
+    padding: 20px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 200px;
+    height: 150px;
+    z-index: 100;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+/* Keyframes for the gradient animation */
+@keyframes gradientAnimation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+
+
+/* App Container (Weather box styling) */
+.app-container {
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 20px;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
+    z-index: 1; /* Ensure it stays above background */
+    margin-bottom: 20px; /* Space below for the timezone widget */
+}
+/* Flex container to align the boxes horizontally */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    gap: 20px; /* Add space between the boxes */
+}
+/* Timezone Box Styles */
+.timezone-box {
+    background-color: lightgreen; /* Light green background */
+    color: black;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    font-family: 'Arial', sans-serif;
+    width: 250px;
+    margin: 20px;
+    position: absolute;
+    left: 35px; /* Adjust this value to position the box horizontally */
+    top: 30%; /* Adjust this value to position it vertically */
+    transform: translateY(-50%); /* Center the box vertically */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional shadow for effect */
+}
+
+/* Time widget text styling */
+.timezone-box h3 {
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+}
+
+.clock p {
+    font-size: 1.2rem;
+    margin: 10px 0;
+}
+/* Emoji Container Styles */
+.emoji-container {
+    position: absolute;
+    top: 80%;
+    left: 20px; /* Adjust this value to control the distance from the right side */
+    transform: translateY(-50%); /* Center vertically */
+    font-size: 5rem; /* Adjust size as needed */
+    z-index: 100; /* Ensure it's above other content */
+}
+.news-ticker-container {
+    position: fixed;
+    top: 100px;
+    right: 10px;
+    width: 250px;
+    height: 300px;
+    background-color: lightgray;
+    padding: 15px;
+    border-radius: 10px;
+    overflow: hidden; /* Hide overflow so only the scrolling headlines are visible */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+  
+  .news-ticker-container h3 {
+    font-size: 1.2rem;
+    color: black;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  
+  #news-ticker {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    height: 100%; /* Full height for smooth scrolling */
+  }
+  
+  #news-ticker li {
+    background-color: white;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: #333;
+    font-size: 0.9rem;
+  }
+  
+  /* Animation for scrolling */
+  @keyframes scroll-news {
+    0% {
+      transform: translateY(100%);
+    }
+    100% {
+      transform: translateY(-100%);
+    }
+  }
+  
+  #news-ticker {
+    display: flex;
+    flex-direction: column;
+    animation: scroll-news 10s linear infinite;
+  }
+  /* Floating FAQ Section Styles */
+.floating-faq {
+    position: fixed;
+    right: 20px; /* Place it on the right side */
+    bottom: 50px; /* A little above the bottom of the screen */
+    width: 250px;
+    background-color: lightgreen;
+    border: 2px solid #333;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    z-index: 999;
+    transition: all 0.3s ease-in-out;
+}
+
+.faq-header {
+    background-color: #333;
+    color: white;
+    padding: 10px;
+    border-radius: 10px 10px 0 0;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.faq-header h3 {
+    margin: 0;
+}
+
+.faq-content {
+    padding: 10px;
+    display: none; /* Initially hidden */
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.faq-content ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.faq-content li {
+    margin-bottom: 10px;
+}
+
+#faqToggle {
+    font-size: 20px;
+    color: #fff;
+    font-weight: bold;
+}
+/* styles.css */
+
+/* Container for social media icons */
+.widgets-container {
+    position: fixed; /* Make it fixed to stay in view when scrolling */
+    top: 100px; /* Distance from the top */
+    right: 90px; /* Distance from the right */
+    display: flex; /* Use flexbox to arrange icons horizontally */
+    gap: 10px; /* Space between icons */
+    z-index: 1000; /* Ensure it appears above other content */
+}
+
+/* Style for social media icons */
+.social-icons {
+    position: absolute; /* Position it absolutely */
+    top: 20px; /* Adjust the distance from the top */
+    right: 10px; /* Adjust the distance from the right */
+    display: flex; /* Use flexbox for horizontal layout */
+    gap: 15px; /* Space between icons */
+    z-index: 100; /* Ensure it appears above other content */
+  }
+  
+  .social-icons .icon img {
+    width: 35px; /* Set a width for the icons */
+    height: 35px; /* Set a height for the icons */
+  }
+  body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background-color: #f0f8ff; /* Light sky color */
+    overflow: hidden;
+    position: relative;
+}
+
+/* Container to hold the wind elements */
+.wind-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+/* Individual leaves (or particles) that will animate */
+.wind-leaf {
+    width: 50px;
+    height: 50px;
+    background: url('https://example.com/leaf.png'); /* Example leaf image */
+    background-size: contain;
+    position: absolute;
+    animation: blow-wind 10s linear infinite;
+}
+
+/* Animate the leaf across the screen */
+@keyframes blow-wind {
+    0% {
+        transform: translateX(-100px) translateY(0px) rotate(0deg);
+    }
+    100% {
+        transform: translateX(100vw) translateY(300px) rotate(360deg);
+    }
+}
+
+/* Randomly position the wind-leaf elements */
+.wind-leaf:nth-child(1) {
+    top: 10%;
+    animation-duration: 8s;
+}
+
+.wind-leaf:nth-child(2) {
+    top: 40%;
+    animation-duration: 12s;
+}
+
+.wind-leaf:nth-child(3) {
+    top: 70%;
+    animation-duration: 15s;
+}
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%; /* Ensure body and html take full height */
+}
+
+
+body {
+    background-image: url('thunderstorm-countryside.jpg'); /* Replace with the actual URL of your image */
+    background-size: cover;  /* Ensures the image covers the entire background */
+    background-position: center; /* Centers the background image */
+    background-repeat: no-repeat; /* Prevents the image from repeating */
+    height: 100vh; /* Ensures the body takes up the full height of the viewport */
+    margin: 0;
+    padding: 0;
+}
+

@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Weather App</title>
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="script.js"></script>
+</head>
+<body>
+    <!-- Blue Box for Weather Forecast in top-left corner -->
+    <div class="blue-box">
+        <p>LIVE ! 🔴</p>
+    </div>
+    <div class="social-icons">
+        <!-- Gmail Icon -->
+        <a href="mailto:uttam.singh.officials@gmail.com" target="_blank" class="icon gmail">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Gmail_Icon.svg/512px-Gmail_Icon.svg.png" alt="Gmail" />
+        </a>
+      
+        <!-- LinkedIn Icon -->
+        <a href="https://www.linkedin.com/in/uttam-singh-985551243/" target="_blank" class="icon linkedin">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png" alt="LinkedIn" />
+        </a>
+      </div>
+
+      
+
+    <!-- Emoji Section -->
+    <div class="emoji-container">🌧️🌤️</div>
+
+    <!-- Main Container for the App -->
+    <div class="app-container">
+        <!-- Map background for searched location -->
+        <div id="map"></div>
+
+        <!-- Weather Search and Info -->
+        <header>
+            <h1>Weather Forecast</h1>
+            <div class="search-container">
+                <input type="text" id="city-input" placeholder="Enter city name...">
+                <button id="search-btn">Search</button>
+            </div>
+
+            <!-- Weather Info -->
+            <div id="weather-info" class="weather-card hidden">
+                <h2 id="city-name"></h2>
+                <div class="temp-wrapper">
+                    <h3 id="temperature"></h3>
+                    <img id="weather-icon" alt="Weather icon">
+                </div>
+                <p id="description"></p>
+                <div class="details">
+                    <p>Humidity: <span id="humidity"></span>%</p>
+                    <p>Wind Speed: <span id="wind-speed"></span> km/h</p>
+                    <p>Feels Like: <span id="feels-like"></span>°C</p>
+                </div>
+            </div>
+
+            <!-- Error Message -->
+            <div id="error-message" class="error hidden">
+                <p>City not found. Please try again.</p>
+            </div>
+
+            <!-- Timezone Clock Widget (Floating on the right side) -->
+            <div class="timezone-box">
+                <h3>Clock</h3>
+                <div class="clock">
+                    <p>India: <span id="local-time"></span></p>
+                </div>
+                <div class="clock">
+                    <p>New York: <span id="new-york-time"></span></p>
+                </div>
+                <div class="clock">
+                    <p>London: <span id="london-time"></span></p>
+                </div>
+                <div class="clock">
+                    <p>Tokyo: <span id="tokyo-time"></span></p>
+                </div>
+            </div>
+        </header>
+    </div>
+    
+
+    <!-- Google Maps API Integration -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHGLUZMids3Scjd4h8SE1K-kcakzMCoQU"></script>
+    <script>
+    // JS for Google Maps & Weather API
+
+    // Initialize and add the map
+    function initMap(lat, lng) {
+        const location = { lat: lat, lng: lng };
+        const map = new google.maps.Map(document.getElementById("map"), {
+            zoom: 8,
+            center: location,
+        });
+        const marker = new google.maps.Marker({
+            position: location,
+            map: map,
+        });
+    }
+
+    // OpenWeatherMap API config
+    const apiKey = '4e1d93f08903cc274c57e0d922829ea7';  // Replace with your OpenWeatherMap API key
+
+    // Get DOM elements
+    const cityInput = document.getElementById('city-input');
+    const searchBtn = document.getElementById('search-btn');
+    const weatherInfo = document.getElementById('weather-info');
+    const cityNameElem = document.getElementById('city-name');
+    const temperatureElem = document.getElementById('temperature');
+    const descriptionElem = document.getElementById('description');
+    const humidityElem = document.getElementById('humidity');
+    const windSpeedElem = document.getElementById('wind-speed');
+    const feelsLikeElem = document.getElementById('feels-like');
+    const weatherIconElem = document.getElementById('weather-icon');
+    const errorMessage = document.getElementById('error-message');
+
+    // Add event listener to the search button
+    searchBtn.addEventListener('click', () => {
+        const city = cityInput.value.trim();
+        if (city) {
+            getWeather(city);
+        } else {
+            displayError('Please enter a city name.');
+        }
+    });
+
+    // Fetch weather data from OpenWeatherMap API
+    async function getWeather(city) {
+        try {
+            const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`);
+            const data = await response.json();
+
+            if (response.ok) {
+                displayWeather(data);
+                // Call Google Maps API with the city's coordinates
+                initMap(data.coord.lat, data.coord.lon);
+            } else {
+                displayError(data.message);
+            }
+        } catch (error) {
+            displayError('An error occurred while fetching the weather data.');
+        }
+    }
+
+    // Display the fetched weather information
+    function displayWeather(data) {
+        const { name, main, weather, wind } = data;
+
+        cityNameElem.textContent = name;
+        temperatureElem.textContent = `${Math.round(main.temp)}°C`;
+        descriptionElem.textContent = weather[0].description;
+        humidityElem.textContent = main.humidity;
+        windSpeedElem.textContent = wind.speed;
+        feelsLikeElem.textContent = `${Math.round(main.feels_like)}°C`;
+        weatherIconElem.src = `http://openweathermap.org/img/wn/${weather[0].icon}@2x.png`;
+
+        weatherInfo.classList.remove('hidden');
+        errorMessage.classList.add('hidden');
+    }
+
+    // Handle errors and display an error message
+    function displayError(message) {
+        weatherInfo.classList.add('hidden');
+        errorMessage.classList.remove('hidden');
+        errorMessage.textContent = message;
+    }
+
+
+
+    // Update clocks for different time zones
+    function updateClock() {
+        const now = new Date();
+
+        const localTime = now.toLocaleTimeString('en-US', { timeZone: 'Asia/Kolkata' });
+        const newYorkTime = now.toLocaleTimeString('en-US', { timeZone: 'America/New_York' });
+        const londonTime = now.toLocaleTimeString('en-US', { timeZone: 'Europe/London' });
+        const tokyoTime = now.toLocaleTimeString('en-US', { timeZone: 'Asia/Tokyo' });
+
+        document.getElementById('local-time').textContent = localTime;
+        document.getElementById('new-york-time').textContent = newYorkTime;
+        document.getElementById('london-time').textContent = londonTime;
+        document.getElementById('tokyo-time').textContent = tokyoTime;
+    }
+
+    setInterval(updateClock, 1000);
+    </script>
+    
+</body>
+
+<div class="background-section"></div>
+
+<script src="//code.tidio.co/bu7gwwn4plrrjztlonynnkqh8iwio4uw.js" async></script>
+</html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wind Animation - Left to Right</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background-color: #f0f8ff; /* Light sky color */
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Wind container that holds all the leaf particles */
+        .wind-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        /* Leaf style */
+        .leaf {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background-image: url('https://cdn-icons-png.flaticon.com/512/2909/2909829.png'); /* Leaf image */
+            background-size: contain;
+            background-repeat: no-repeat;
+            animation: float 10s linear infinite;
+        }
+
+        /* Keyframe animation for the wind effect from left to right */
+        @keyframes float {
+            0% {
+                transform: translateX(-50px) rotate(0deg); /* Start from left */
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(100vw) rotate(360deg); /* Move to right */
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Wind animation container -->
+    <div class="wind-container" id="windContainer"></div>
+
+    <script>
+        // Generate multiple leaves for wind effect
+        const windContainer = document.getElementById('windContainer');
+
+        function createLeaf() {
+            const leaf = document.createElement('div');
+            leaf.classList.add('leaf');
+
+            // Randomize the position, animation duration, and size of each leaf
+            leaf.style.top = Math.random() * 100 + 'vh';  // Vertical position
+            leaf.style.animationDuration = Math.random() * 3 + 7 + 's'; // Speed between 7s to 10s
+            leaf.style.transform = `scale(${Math.random() * 0.5 + 0.5})`;
+
+            windContainer.appendChild(leaf);
+
+            // Remove leaf after animation ends
+            setTimeout(() => {
+                windContainer.removeChild(leaf);
+            }, 10000); // 10s is the maximum duration
+        }
+
+        // Continuously create new leaves every 300ms
+        setInterval(createLeaf, 300);
+    </script>
+
+</body>
+</html>
+
+
+
